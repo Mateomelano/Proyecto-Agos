@@ -1,0 +1,36 @@
+.calendar-table td {
+    width: 14.28%;
+    height: 100px;
+    vertical-align: top;
+    position: relative;
+    cursor: pointer;
+}
+.heart {
+    color: red;
+    font-size: 20px;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+.nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.polaroid {
+    width: 200px;
+    height: 250px;
+    background: white;
+    border: 10px solid #f0f0f0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 5px;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+.polaroid img {
+    width: 100%;
+    height: auto;
+}
+.polaroid:hover {
+    transform: rotateX(5deg) rotateY(5deg);
+}
