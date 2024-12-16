@@ -15,5 +15,8 @@
     "gulp-sass": "^5.1.0",
     "sass": "^1.82.0"
   },
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "cloudinary": "^2.5.1"
+  }
 }

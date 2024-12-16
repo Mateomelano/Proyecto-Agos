@@ -111,4 +111,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Generar el calendario inicial
     generateCalendar(currentYear, currentMonth);
+
+
+    
 });
