@@ -522,43 +522,46 @@ body {
 }
 
 #imagesContainer {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(5, minmax(200px, 2fr));
   gap: 20px;
-  justify-items: center;
   margin-top: 20px;
 }
 
 .polaroid {
   position: relative;
-  width: 200px;
-  height: 250px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   background: white;
   border: 10px solid #f0f0f0;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   padding: 5px;
   text-align: center;
-  transition: transform 0.3s ease;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  width: 250px;
+  height: auto;
+  margin-bottom: 10px;
 }
 .polaroid img {
   width: 100%;
   height: auto;
-  cursor: pointer;
-  object-fit: cover;
-  flex: 1;
+  object-fit: contain;
+  max-height: 220px;
+  margin: 0 auto;
+}
+.polaroid.horizontal {
+  width: 250px;
+  height: 250px;
 }
 .polaroid .image-date {
   margin-top: 8px;
-  font-size: 1.2rem;
+  font-size: 1rem;
   color: #555;
   font-style: italic;
   font-family: "Roboto Mono", monospace;
-  font-weight: 800;
+  font-weight: bold;
   text-align: center;
-  margin-bottom: 0;
+  width: 100%;
 }
 
 .custom-input-center {
@@ -576,7 +579,7 @@ body {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   border-radius: 8px;
   width: 40rem;
-  height: 40rem;
+  height: auto;
 }
 
 /* Estilos para el filtro de fechas */
@@ -596,6 +599,83 @@ body {
 option {
   font-family: "Roboto Mono", monospace;
   font-weight: 500;
+}
+
+.date-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 30px;
+}
+.date-group .images-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+.date-group .date-line {
+  width: 100%;
+  text-align: center;
+  font-size: 2rem;
+  font-family: "Roboto Mono", monospace;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+  margin-top: 20px;
+  padding-bottom: 5px;
+  border-bottom: 2px solid #ddd;
+}
+
+body {
+  font-family: "Roboto Mono", monospace;
+  background-color: #f9f9f9;
+  margin: 0;
+  padding: 0;
+}
+
+#videosContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
+  gap: 20px;
+  padding: 20px;
+  justify-items: center;
+  margin-top: 20px;
+}
+
+.polaroid-video {
+  position: relative;
+  background: white;
+  border: 10px solid #f0f0f0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 5px;
+  text-align: center;
+  width: 500px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.polaroid-video iframe {
+  width: 100%;
+  height: 170px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+}
+.polaroid-video .video-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+  margin-top: 5px;
+  font-family: "Roboto Mono", monospace;
+}
+
+@media (max-width: 768px) {
+  .polaroid-video {
+    width: 90%;
+  }
 }
 
 /*# sourceMappingURL=app.css.map */

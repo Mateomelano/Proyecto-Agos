@@ -1,4 +1,5 @@
 const mockApiURL = "https://67603a526be7889dc35d40f7.mockapi.io/Fotos";
+const mockApiURL2 = "https://67603a526be7889dc35d40f7.mockapi.io/Foto";
 const cloudinaryURL = "https://api.cloudinary.com/v1_1/dbraqaqko/image/upload"; // Cloud Name correcto
 const cloudinaryPreset = "ml_default"; // Upload Preset
 
@@ -11,15 +12,12 @@ function handleMouseMove() {
             const { offsetWidth: width, offsetHeight: height } = polaroid;
             const { offsetX: x, offsetY: y } = e;
 
-            // Calcular el ángulo de inclinación según la posición del mouse
-            const rotateX = (y / height - 0.5) * 20;  // Inclinación en el eje X
-            const rotateY = (x / width - 0.5) * -20;  // Inclinación en el eje Y
+            const rotateX = (y / height - 0.5) * 20;
+            const rotateY = (x / width - 0.5) * -20;
 
-            // Aplicar el efecto de inclinación y movimiento dinámico
             polaroid.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
         });
 
-        // Restaurar la inclinación al salir del área de la imagen
         polaroid.addEventListener('mouseleave', () => {
             polaroid.style.transform = 'rotateX(0deg) rotateY(0deg) scale(1)';
         });
@@ -32,37 +30,74 @@ async function loadImages(filterDate = 'todas') {
         const response = await fetch(mockApiURL);
         const images = await response.json();
 
-        // Filtrar las imágenes por fecha, si es necesario
+        // Filtrar por fecha si no es 'todas'
         const filteredImages = filterDate === 'todas' ? images : images.filter(image => image.fecha === filterDate);
 
         const container = document.getElementById("imagesContainer");
-        container.innerHTML = ""; // Limpiar el contenedor
+        container.innerHTML = "";
 
+        // Agrupar imágenes por fecha
+        const groupedImages = {};
         filteredImages.forEach((image) => {
-            const div = document.createElement("div");
-            div.classList.add("polaroid"); // Aplicar clase Polaroid
-            div.innerHTML = `
-                <img src="${image.url}" alt="Imagen subida" class="image-clickable" />
-                <p class="image-date">${image.fecha || "Sin fecha"}</p>
-            `;
-
-            // Agregar evento para ampliar imagen
-            div.querySelector(".image-clickable").addEventListener("click", () => {
-                Swal.fire({
-                    imageUrl: image.url,
-                    imageAlt: "Imagen ampliada",
-                    showCloseButton: true,
-                    showConfirmButton: false,
-                    customClass: {
-                        popup: "enlarged-image-modal",
-                    },
-                });
-            });
-
-            container.appendChild(div);
+            if (!groupedImages[image.fecha]) {
+                groupedImages[image.fecha] = [];
+            }
+            groupedImages[image.fecha].push(image);
         });
 
-        // Llamar a la función para aplicar la inclinación a las imágenes
+        // Recorrer las fechas y mostrar las imágenes agrupadas
+        Object.keys(groupedImages).sort((a, b) => new Date(a) - new Date(b)).forEach((date) => {
+            const dateContainer = document.createElement("div");
+            dateContainer.classList.add("date-group");
+
+            const imagesWrapper = document.createElement("div");
+            imagesWrapper.classList.add("images-wrapper");
+
+            groupedImages[date].forEach((image) => {
+                const div = document.createElement("div");
+                div.classList.add("polaroid");
+
+                const img = document.createElement("img");
+                img.src = image.url;
+                img.alt = "Imagen subida";
+
+                // **Agregar atributos AOS**
+                div.setAttribute("data-aos", "fade-up");
+                div.setAttribute("data-aos-anchor-placement", "center-bottom");
+
+                // Detectar si la imagen es horizontal
+                img.onload = () => {
+                    if (img.naturalWidth > img.naturalHeight) {
+                        div.classList.add("horizontal");
+                    }
+                };
+
+                img.addEventListener("click", () => {
+                    Swal.fire({
+                        imageUrl: image.url,
+                        imageAlt: "Imagen ampliada",
+                        showCloseButton: true,
+                        showConfirmButton: false,
+                        customClass: {
+                            popup: "enlarged-image-modal",
+                        },
+                    });
+                });
+
+                div.appendChild(img);
+                imagesWrapper.appendChild(div);
+            });
+
+            // Agregar fecha ANTES de las imágenes
+            const dateLine = document.createElement("div");
+            dateLine.classList.add("date-line");
+            dateLine.textContent = date;
+
+            dateContainer.appendChild(dateLine); // Agregar fecha
+            dateContainer.appendChild(imagesWrapper); // Agregar imágenes
+            container.appendChild(dateContainer); // Agregar al contenedor principal
+        });
+
         handleMouseMove();
     } catch (error) {
         console.error("Error cargando imágenes:", error);
@@ -75,13 +110,11 @@ async function loadDates() {
         const response = await fetch(mockApiURL);
         const images = await response.json();
 
-        // Obtener fechas únicas y ordenarlas de manera ascendente
-        const dates = [...new Set(images.map(image => image.fecha))]; // Obtener fechas únicas
-        dates.sort((a, b) => new Date(a) - new Date(b)); // Ordenar las fechas de forma ascendente
+        const dates = [...new Set(images.map(image => image.fecha))];
+        dates.sort((a, b) => new Date(a) - new Date(b));
 
         const dateFilter = document.getElementById("dateFilter");
 
-        // Agregar las fechas al select
         dates.forEach(date => {
             const option = document.createElement("option");
             option.value = date;
@@ -89,9 +122,8 @@ async function loadDates() {
             dateFilter.appendChild(option);
         });
 
-        // Evento para cambiar el filtro de fecha
         dateFilter.addEventListener("change", (event) => {
-            loadImages(event.target.value); // Recargar imágenes con el filtro seleccionado
+            loadImages(event.target.value);
         });
 
     } catch (error) {
@@ -99,8 +131,7 @@ async function loadDates() {
     }
 }
 
-
-// Manejar el evento de selección de imagen
+// Manejar la subida de imágenes
 document.getElementById("imageInput").addEventListener("change", async (e) => {
     const imageFile = e.target.files[0];
 
@@ -110,7 +141,6 @@ document.getElementById("imageInput").addEventListener("change", async (e) => {
     }
 
     try {
-        // Mostrar ventana de SweetAlert para ingresar la fecha
         const { value: fecha } = await Swal.fire({
             title: "Ingresa la fecha",
             input: "date",
@@ -129,24 +159,16 @@ document.getElementById("imageInput").addEventListener("change", async (e) => {
             return;
         }
 
-        // Subir imagen a Cloudinary
         const formData = new FormData();
         formData.append("file", imageFile);
         formData.append("upload_preset", cloudinaryPreset);
 
-        const response = await fetch(cloudinaryURL, {
-            method: "POST",
-            body: formData,
-        });
-
-        if (!response.ok) {
-            throw new Error("Error en la subida a Cloudinary");
-        }
+        const response = await fetch(cloudinaryURL, { method: "POST", body: formData });
+        if (!response.ok) throw new Error("Error en la subida a Cloudinary");
 
         const data = await response.json();
-        const imageUrl = data.secure_url; // URL pública de la imagen subida
+        const imageUrl = data.secure_url;
 
-        // Guardar URL y fecha en MockAPI
         await fetch(mockApiURL, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -154,14 +176,13 @@ document.getElementById("imageInput").addEventListener("change", async (e) => {
         });
 
         Swal.fire("Éxito", "Imagen subida correctamente", "success");
-        loadImages(); // Recargar las imágenes
+        loadImages();
+
     } catch (error) {
         console.error("Error subiendo la imagen:", error);
         Swal.fire("Error", "Error subiendo la imagen. Revisa la consola.", "error");
     }
-
 });
 
-// Cargar imágenes al cargar la página
-loadDates(); // Cargar fechas antes de las imágenes
-loadImages(); // Cargar las imágenes
+loadDates();
+loadImages();

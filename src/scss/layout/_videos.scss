@@ -1,0 +1,54 @@
+body {
+    font-family: "Roboto Mono", monospace;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+}
+
+#videosContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    justify-items: center;
+    margin-top: 20px;
+}
+
+// Estilo Polaroid para videos
+.polaroid-video {
+    position: relative;
+    background: white;
+    border: 10px solid #f0f0f0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 5px;
+    text-align: center;
+    width: 500px; // Ancho fijo
+    height: auto; // Altura dinámica
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    iframe {
+        width: 100%;
+        height: 170px; // Ajuste del tamaño del video
+        margin-bottom: 10px;
+        border-radius: 8px; // Bordes redondeados
+    }
+
+    .video-title {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #333;
+        text-align: center;
+        margin-top: 5px;
+        font-family: "Roboto Mono", monospace;
+    }
+}
+
+// Responsive
+@media (max-width: 768px) {
+    .polaroid-video {
+        width: 90%;
+    }
+}

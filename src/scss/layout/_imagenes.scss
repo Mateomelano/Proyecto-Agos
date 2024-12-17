@@ -1,50 +1,53 @@
-// Contenedor de imágenes
-body{
+body {
     font-family: "Roboto Mono", monospace;
 }
+
 #imagesContainer {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); // Columnas ajustables
+    grid-template-columns: repeat(5, minmax(200px, 2fr)); // Columnas ajustables
     gap: 20px;
-    justify-items: center;
+
     margin-top: 20px;
 }
 
 // Estilo Polaroid
 .polaroid {
-    position: relative; // Necesario para posicionar la fecha
-    width: 200px;
-    height: 250px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     background: white;
     border: 10px solid #f0f0f0;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     padding: 5px;
     text-align: center;
-    transition: transform 0.3s ease;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between; // Empuja fecha al final del contenedor
+    width: 250px; // Ancho fijo
+    height: auto; // Altura dinámica basada en el contenido
+    margin-bottom: 10px;
 
     img {
         width: 100%;
-        height: auto;
-        cursor: pointer; // Cambiar el cursor al pasar el mouse
-        object-fit: cover; // Mantener proporción en imágenes verticales
-        flex: 1; // Hace que la imagen ocupe todo el espacio disponible
+        height: auto; // Mantiene la relación de aspecto
+        object-fit: contain;
+        max-height: 220px; // Ajusta el alto máximo de la imagen
+        margin: 0 auto;
     }
 
-
+    // Formato horizontal
+    &.horizontal {
+        width: 250px; // Polaroid más ancho
+        height: 250px; // Polaroid más bajo
+    }
 
     .image-date {
-        margin-top: 8px;
-        font-size: 1.2rem;
+        margin-top: 8px; // Separación con la imagen
+        font-size: 1rem;
         color: #555;
         font-style: italic;
         font-family: "Roboto Mono", monospace;
-        font-weight: 800;
+        font-weight: bold;
         text-align: center;
-        margin-bottom: 0; // Asegurar que no haya espacio adicional
-        
+        width: 100%;
     }
 }
 
@@ -65,7 +68,7 @@ body{
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     border-radius: 8px;
     width: 40rem;
-    height: 40rem;
+    height: auto;
 }
 
 /* Estilos para el filtro de fechas */
@@ -81,7 +84,37 @@ body{
     margin-top: 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
+
 option {
     font-family: "Roboto Mono", monospace;
     font-weight: 500;
+}
+
+
+.date-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 30px;
+
+    .images-wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+        margin-bottom: 10px;
+    }
+
+    .date-line {
+        width: 100%;
+        text-align: center;
+        font-size: 2.0rem;
+        font-family: "Roboto Mono", monospace;
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 10px; // Espacio después de la fecha
+        margin-top: 20px;    // Espacio superior
+        padding-bottom: 5px; // Espacio antes de la línea
+        border-bottom: 2px solid #ddd; // Línea divisoria
+    }
 }
