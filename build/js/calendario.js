@@ -3,6 +3,9 @@ document.addEventListener("DOMContentLoaded", function () {
     let currentYear = 2024;
     let currentMonth = 8; // Septiembre (indexado desde 0)
 
+    // URL de la API Mock
+    const mockApiURL = "https://67603a526be7889dc35d40f7.mockapi.io/Fotos";
+
     // Array de nombres de meses
     const monthNames = [
         "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
@@ -16,8 +19,46 @@ document.addEventListener("DOMContentLoaded", function () {
         localStorage.setItem("heartsData", JSON.stringify(heartsData));
     }
 
+    // Función para verificar si hay imágenes para una fecha específica
+    async function checkImagesForDate(dateKey) {
+        try {
+            const response = await fetch(mockApiURL);
+            const images = await response.json();
+            return images.some(image => image.fecha === dateKey); // Verificar si hay imágenes con esa fecha
+        } catch (error) {
+            console.error("Error verificando imágenes para la fecha:", error);
+            return false;
+        }
+    }
+
+    // Función para cargar imágenes de una fecha específica
+    async function loadImagesForDate(dateKey) {
+        try {
+            const response = await fetch(mockApiURL);
+            const images = await response.json();
+            const filteredImages = images.filter(image => image.fecha === dateKey);
+
+            // Mostrar imágenes en un contenedor
+            const imagesContainer = document.getElementById("imagesContainer");
+            imagesContainer.innerHTML = `<h3>Imágenes del ${dateKey}</h3>`;
+            filteredImages.forEach(img => {
+                const imgElement = document.createElement("img");
+                imgElement.src = img.url;
+                imgElement.alt = `Imagen de ${dateKey}`;
+                imgElement.style.width = "100px";
+                imgElement.style.margin = "5px";
+                imagesContainer.appendChild(imgElement);
+            });
+
+            // Desplazarse al contenedor de imágenes
+            imagesContainer.scrollIntoView({ behavior: "smooth" });
+        } catch (error) {
+            console.error("Error cargando imágenes:", error);
+        }
+    }
+
     // Función para generar el calendario
-    function generateCalendar(year, month) {
+    async function generateCalendar(year, month) {
         const calendarBody = document.getElementById("calendar-body");
         const currentMonthLabel = document.getElementById("currentMonth");
         const firstDay = new Date(year, month, 1).getDay(); // Día de la semana del primer día del mes
@@ -46,7 +87,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     cell.innerHTML = "";
                 } else {
                     // Día del mes
-                    const dateKey = `${year}-${month + 1}-${dayCounter}`;
+                    const dateKey = `${year}-${String(month + 1).padStart(2, "0")}-${String(dayCounter).padStart(2, "0")}`;
                     cell.innerHTML = `<span>${dayCounter}</span>`;
                     cell.dataset.date = dateKey; // Asignar la fecha como atributo
 
@@ -56,6 +97,15 @@ document.addEventListener("DOMContentLoaded", function () {
                         heartIcon.classList.add("heart");
                         heartIcon.innerHTML = "❤️";
                         cell.appendChild(heartIcon);
+
+                        // Verificar si hay imágenes para esa fecha y agregar ícono de imagen
+                        const hasImages = await checkImagesForDate(dateKey);
+                        if (hasImages) {
+                            const imageIcon = document.createElement("span");
+                            imageIcon.classList.add("image-icon");
+                            imageIcon.innerHTML = "📷";
+                            cell.appendChild(imageIcon);
+                        }
                     }
 
                     dayCounter++;
@@ -111,7 +161,4 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Generar el calendario inicial
     generateCalendar(currentYear, currentMonth);
-
-
-    
 });

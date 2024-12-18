@@ -19,31 +19,21 @@
 }
 
 
-/* Icono flotante para subir imágenes */
-.upload-icon {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 60px;
-    height: 60px;
-    background-color: #007bff;
-    border-radius: 50%;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.image-icon {
+    margin-left: 5px;
     cursor: pointer;
-    transition: transform 0.3s ease, background-color 0.3s ease;
-
-    img {
-        width: 30px;
-        height: 30px;
-        filter: invert(1); /* Hace el icono blanco */
-    }
-
-    &:hover {
-        transform: scale(1.1);
-        background-color: #0056b3;
-    }
+    font-size: 1.2em;
+    color: #007BFF;
+    transition: transform 0.2s;
 }
 
+.image-icon:hover {
+    transform: scale(1.2);
+}
+
+#imagesContainer img {
+    display: inline-block;
+    margin: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}

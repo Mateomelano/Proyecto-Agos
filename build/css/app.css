@@ -399,30 +399,23 @@ h1 {
   align-items: center;
 }
 
-/* Icono flotante para subir imágenes */
-.upload-icon {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 60px;
-  height: 60px;
-  background-color: #007bff;
-  border-radius: 50%;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.image-icon {
+  margin-left: 5px;
   cursor: pointer;
-  transition: transform 0.3s ease, background-color 0.3s ease;
+  font-size: 1.2em;
+  color: #007BFF;
+  transition: transform 0.2s;
 }
-.upload-icon img {
-  width: 30px;
-  height: 30px;
-  filter: invert(1); /* Hace el icono blanco */
+
+.image-icon:hover {
+  transform: scale(1.2);
 }
-.upload-icon:hover {
-  transform: scale(1.1);
-  background-color: #0056b3;
+
+#imagesContainer img {
+  display: inline-block;
+  margin: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
 
 body {
@@ -578,7 +571,6 @@ body {
   border: 5px solid #f0f0f0;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   border-radius: 8px;
-  width: 40rem;
   height: auto;
 }
 
@@ -627,6 +619,33 @@ option {
   border-bottom: 2px solid #ddd;
 }
 
+/* Icono flotante para subir imágenes */
+.upload-icon {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  background-color: #007bff;
+  border-radius: 50%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+.upload-icon img {
+  width: 30px;
+  height: 30px;
+  filter: invert(1); /* Hace el icono blanco */
+  cursor: pointer;
+}
+.upload-icon:hover {
+  transform: scale(1.1);
+  background-color: #0056b3;
+}
+
 body {
   font-family: "Roboto Mono", monospace;
   background-color: #f9f9f9;
@@ -635,7 +654,8 @@ body {
 }
 
 #videosContainer {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
   gap: 20px;
   padding: 20px;
@@ -676,6 +696,48 @@ body {
   .polaroid-video {
     width: 90%;
   }
+}
+.video-section {
+  margin: 20px 0;
+  text-align: center;
+}
+
+.video-section h2 {
+  font-size: 2rem;
+  font-family: "Roboto Mono", monospace;
+  margin-bottom: 10px;
+  padding-bottom: 8px; /* Espacio entre texto y línea */
+}
+
+.video-section h2::after {
+  content: "";
+  display: block;
+  width: 80%;
+  text-align: center;
+  font-size: 2rem;
+  font-family: "Roboto Mono", monospace;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+  margin-top: 20px;
+  padding-bottom: 5px;
+  border-bottom: 2px solid #ddd;
+  margin: 0 auto;
+}
+
+.polaroid-video {
+  display: inline-block;
+  margin: 10px;
+  border: 1px solid #ddd;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 10px;
+  background: #fff;
+}
+
+.video-title {
+  margin-top: 8px;
+  font-size: 16px;
+  font-weight: bold;
 }
 
 /*# sourceMappingURL=app.css.map */

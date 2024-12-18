@@ -1,5 +1,4 @@
 const mockApiURL = "https://67603a526be7889dc35d40f7.mockapi.io/Fotos";
-const mockApiURL2 = "https://67603a526be7889dc35d40f7.mockapi.io/Foto";
 const cloudinaryURL = "https://api.cloudinary.com/v1_1/dbraqaqko/image/upload"; // Cloud Name correcto
 const cloudinaryPreset = "ml_default"; // Upload Preset
 
@@ -23,6 +22,14 @@ function handleMouseMove() {
         });
     });
 }
+
+// Función para formatear las fechas
+function formatDate(dateString) {
+    const [year, month, day] = dateString.split("-"); // Suponiendo formato ISO "YYYY-MM-DD"
+    const heart = day === "09" ? "❤️" : "";
+    return `${heart}${day}/${month}/${year}${heart}`;
+}
+
 
 // Cargar imágenes desde MockAPI
 async function loadImages(filterDate = 'todas') {
@@ -62,36 +69,60 @@ async function loadImages(filterDate = 'todas') {
                 img.alt = "Imagen subida";
 
                 // **Agregar atributos AOS**
-                div.setAttribute("data-aos", "fade-up");
-                div.setAttribute("data-aos-anchor-placement", "center-bottom");
+                img.setAttribute("data-aos", "fade-up");
+                img.setAttribute("data-aos-anchor-placement", "center-bottom");
 
                 // Detectar si la imagen es horizontal
                 img.onload = () => {
                     if (img.naturalWidth > img.naturalHeight) {
-                        div.classList.add("horizontal");
+                        img.classList.add("horizontal");
+                        
                     }
                 };
 
                 img.addEventListener("click", () => {
-                    Swal.fire({
-                        imageUrl: image.url,
-                        imageAlt: "Imagen ampliada",
-                        showCloseButton: true,
-                        showConfirmButton: false,
-                        customClass: {
-                            popup: "enlarged-image-modal",
-                        },
-                    });
+                    if (img.width > img.height) {
+                        Swal.fire({
+                            imageUrl: image.url,
+                            imageAlt: "Imagen ampliada",
+                            width: 1200,
+                            height: 1200,
+                            didOpen: () => {
+                                img.setAttribute("data-aos", "fade-up");
+                                img.setAttribute("data-aos-anchor-placement", "center-bottom");
+                            },
+                            showCloseButton: true,
+                            showConfirmButton: false,
+                            customClass: {
+                                popup: "enlarged-image-modal",
+                            },
+                        });
+                    } else {
+                        Swal.fire({
+                            imageUrl: image.url,
+                            imageAlt: "Imagen ampliada",
+                            width: 1000,
+                            height: 800,
+                            didOpen: () => {
+                                img.setAttribute("data-aos", "fade-up");
+                                img.setAttribute("data-aos-anchor-placement", "center-bottom");
+                            },
+                            showCloseButton: true,
+                            showConfirmButton: false,
+                            customClass: {
+                                popup: "enlarged-image-modal",
+                            },
+                        });
+                    }
                 });
-
                 div.appendChild(img);
                 imagesWrapper.appendChild(div);
             });
 
-            // Agregar fecha ANTES de las imágenes
+            // Agregar fecha ANTES de las imágenes con formato día/mes/año
             const dateLine = document.createElement("div");
             dateLine.classList.add("date-line");
-            dateLine.textContent = date;
+            dateLine.textContent = formatDate(date); // Usar formato personalizado
 
             dateContainer.appendChild(dateLine); // Agregar fecha
             dateContainer.appendChild(imagesWrapper); // Agregar imágenes
@@ -118,7 +149,7 @@ async function loadDates() {
         dates.forEach(date => {
             const option = document.createElement("option");
             option.value = date;
-            option.textContent = date;
+            option.textContent = formatDate(date); // Usar formato personalizado
             dateFilter.appendChild(option);
         });
 

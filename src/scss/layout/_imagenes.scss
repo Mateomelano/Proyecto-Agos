@@ -67,7 +67,6 @@ body {
     border: 5px solid #f0f0f0;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     border-radius: 8px;
-    width: 40rem;
     height: auto;
 }
 
@@ -116,5 +115,34 @@ option {
         margin-top: 20px;    // Espacio superior
         padding-bottom: 5px; // Espacio antes de la línea
         border-bottom: 2px solid #ddd; // Línea divisoria
+    }
+}
+
+/* Icono flotante para subir imágenes */
+.upload-icon {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    background-color: #007bff;
+    border-radius: 50%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+
+    img {
+        width: 30px;
+        height: 30px;
+        filter: invert(1); /* Hace el icono blanco */
+        cursor: pointer;
+    }
+
+    &:hover {
+        transform: scale(1.1);
+        background-color: #0056b3;
     }
 }

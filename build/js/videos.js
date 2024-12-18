@@ -1,39 +1,123 @@
-const videoLinks = [
-    { url: "https://www.youtube.com/embed/5w3Jd6uvpD8", title: "Huracan Meri - Eros Ramazotti " },
-    { url: "https://www.youtube.com/embed/FUFDzV2GmBM", title: "Heaven Knows I’m Miserable Now - The Smiths" },
-    { url: "https://www.youtube.com/embed/pdw9igpfBzA", title: "Wonderful Tonigh - Eric Clapton" },
-    { url: "https://www.youtube.com/embed/XiQTXNe2Cy4", title: "Como te extraño mi amor - Leo Dan" },
-    { url: "https://www.youtube.com/embed/FvAnvRQbO94", title: "Los Aviones - Andres Calamaro - Especial 1er Mes" },
+const apiKey = "AIzaSyCCQfBn0QlqKmPUbaZosV-vbn7GMi16RlE"; // Tu clave API de YouTube
+const channelId = "UClPKb4gAG26gYP-PFufA0wQ"; // ID del canal
+const maxResults = 10; // Número de videos a mostrar
+
+// IDs de las playlists
+const playlists = [
+    { id: "PLZIEfzWIUc6pg0GbH9BNDW9k8saHrHRi0", title: "Románticos" },
+    { id: "PLZIEfzWIUc6rDyvEg6iTCWGAKeq29_5-L", title: "No tan románticos pero dedicados igual" },
 ];
 
-// Función para cargar los videos
-function loadVideos() {
-    const container = document.createElement("div");
-    container.id = "videosContainer";
-    document.body.appendChild(container);
+// Función para decodificar entidades HTML
+function decodeHtmlEntities(text) {
+    const tempElement = document.createElement("textarea");
+    tempElement.innerHTML = text;
+    return tempElement.value;
+}
 
-    videoLinks.forEach((video) => {
-        // Crear el contenedor principal
+// Función para obtener videos de una playlist
+async function fetchPlaylistVideos(playlistId) {
+    const apiUrl = `https://www.googleapis.com/youtube/v3/playlistItems?key=${apiKey}&playlistId=${playlistId}&part=snippet&maxResults=${maxResults}`;
+    try {
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+        return data.items || [];
+    } catch (error) {
+        console.error("Error al obtener videos de la playlist:", error);
+        return [];
+    }
+}
+
+// Función para obtener los últimos videos del canal
+async function fetchChannelVideos() {
+    const apiUrl = `https://www.googleapis.com/youtube/v3/search?key=${apiKey}&channelId=${channelId}&part=snippet&type=video&order=date&maxResults=${maxResults}`;
+    try {
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+        return data.items || [];
+    } catch (error) {
+        console.error("Error al obtener videos del canal:", error);
+        return [];
+    }
+}
+
+// Función para separar videos en normales y especiales
+function separateVideos(videos) {
+    const specialVideos = [];
+    const specialVideoIds = new Set();
+
+    videos.forEach((video) => {
+        const title = decodeHtmlEntities(video.snippet.title);
+        if (title.toLowerCase().includes("especial")) {
+            specialVideos.push(video);
+            const videoId = video.snippet.resourceId?.videoId || video.id.videoId;
+            specialVideoIds.add(videoId); // Guardar ID de video especial
+        }
+    });
+
+    return { specialVideos, specialVideoIds };
+}
+
+// Función para filtrar videos de una playlist excluyendo los especiales
+function filterVideos(videos, specialVideoIds) {
+    return videos.filter((video) => {
+        const videoId = video.snippet.resourceId?.videoId || video.id.videoId;
+        return !specialVideoIds.has(videoId); // Excluir si está en la lista de especiales
+    });
+}
+
+// Función para mostrar videos en una sección
+function displayVideos(videos, sectionTitle, container) {
+    const section = document.createElement("div");
+    section.classList.add("video-section");
+
+    const title = document.createElement("h2");
+    title.textContent = sectionTitle;
+
+    section.appendChild(title);
+
+    videos.forEach((video) => {
         const videoCard = document.createElement("div");
         videoCard.classList.add("polaroid-video");
 
-        // Crear el iframe para el video
         const iframe = document.createElement("iframe");
-        iframe.src = video.url;
+        const videoId = video.snippet.resourceId?.videoId || video.id.videoId;
+        iframe.src = `https://www.youtube.com/embed/${videoId}`;
         iframe.frameBorder = "0";
         iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
         iframe.allowFullscreen = true;
 
-        // Crear el título
-        const title = document.createElement("div");
-        title.classList.add("video-title");
-        title.textContent = video.title;
+        const videoTitle = document.createElement("div");
+        videoTitle.classList.add("video-title");
+        videoTitle.textContent = decodeHtmlEntities(video.snippet.title);
 
-        // Agregar elementos al contenedor
         videoCard.appendChild(iframe);
-        videoCard.appendChild(title);
-        container.appendChild(videoCard);
+        videoCard.appendChild(videoTitle);
+        section.appendChild(videoCard);
     });
+
+    container.appendChild(section);
+}
+
+// Función principal para cargar todos los videos
+async function loadVideos() {
+    const container = document.createElement("div");
+    container.id = "videosContainer";
+    document.body.appendChild(container);
+
+    // 1. Cargar los últimos videos del canal y filtrar especiales
+    const channelVideos = await fetchChannelVideos();
+    const { specialVideos, specialVideoIds } = separateVideos(channelVideos);
+
+    // Mostrar videos especiales
+    displayVideos(specialVideos, "Especiales", container);
+
+    // 2. Cargar videos de las playlists excluyendo los especiales
+    for (const playlist of playlists) {
+        const playlistVideos = await fetchPlaylistVideos(playlist.id);
+        const filteredVideos = filterVideos(playlistVideos, specialVideoIds); // Excluir videos especiales
+        displayVideos(filteredVideos, playlist.title, container);
+    }
 }
 
 // Ejecutar la función al cargar la página

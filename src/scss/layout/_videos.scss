@@ -6,7 +6,8 @@ body {
 }
 
 #videosContainer {
-    display: grid;
+    display: flex;
+    flex-direction: column;
     grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
     gap: 20px;
     padding: 20px;
@@ -51,4 +52,47 @@ body {
     .polaroid-video {
         width: 90%;
     }
+}
+
+.video-section {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.video-section h2 {
+    font-size: 2.0rem;
+    font-family: "Roboto Mono", monospace;
+    margin-bottom: 10px;
+    padding-bottom: 8px; /* Espacio entre texto y línea */
+}
+
+.video-section h2::after {
+    content: "";
+    display: block;
+    width: 80%;
+    text-align: center;
+    font-size: 2.0rem;
+    font-family: "Roboto Mono", monospace;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px; // Espacio después de la fecha
+    margin-top: 20px;    // Espacio superior
+    padding-bottom: 5px; // Espacio antes de la línea
+    border-bottom: 2px solid #ddd; // Línea divisoria
+    margin: 0 auto;
+}
+
+.polaroid-video {
+    display: inline-block;
+    margin: 10px;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    background: #fff;
+}
+
+.video-title {
+    margin-top: 8px;
+    font-size: 16px;
+    font-weight: bold;
 }
