@@ -1,10 +1,9 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // Variables para el año y mes actuales
-    let currentYear = 2024;
-    let currentMonth = 8; // Septiembre (indexado desde 0)
-
-    // URL de la API Mock
-    const mockApiURL = "https://67603a526be7889dc35d40f7.mockapi.io/Fotos";
+    // Variables iniciales
+    let currentYear = localStorage.getItem("lastYear") ? parseInt(localStorage.getItem("lastYear")) : 2024;
+    let currentMonth = localStorage.getItem("lastMonth") ? parseInt(localStorage.getItem("lastMonth")) : 8; // Septiembre
+    const startYear = 2024;
+    const startMonth = 8; // Septiembre 2024
 
     // Array de nombres de meses
     const monthNames = [
@@ -19,46 +18,14 @@ document.addEventListener("DOMContentLoaded", function () {
         localStorage.setItem("heartsData", JSON.stringify(heartsData));
     }
 
-    // Función para verificar si hay imágenes para una fecha específica
-    async function checkImagesForDate(dateKey) {
-        try {
-            const response = await fetch(mockApiURL);
-            const images = await response.json();
-            return images.some(image => image.fecha === dateKey); // Verificar si hay imágenes con esa fecha
-        } catch (error) {
-            console.error("Error verificando imágenes para la fecha:", error);
-            return false;
-        }
-    }
-
-    // Función para cargar imágenes de una fecha específica
-    async function loadImagesForDate(dateKey) {
-        try {
-            const response = await fetch(mockApiURL);
-            const images = await response.json();
-            const filteredImages = images.filter(image => image.fecha === dateKey);
-
-            // Mostrar imágenes en un contenedor
-            const imagesContainer = document.getElementById("imagesContainer");
-            imagesContainer.innerHTML = `<h3>Imágenes del ${dateKey}</h3>`;
-            filteredImages.forEach(img => {
-                const imgElement = document.createElement("img");
-                imgElement.src = img.url;
-                imgElement.alt = `Imagen de ${dateKey}`;
-                imgElement.style.width = "100px";
-                imgElement.style.margin = "5px";
-                imagesContainer.appendChild(imgElement);
-            });
-
-            // Desplazarse al contenedor de imágenes
-            imagesContainer.scrollIntoView({ behavior: "smooth" });
-        } catch (error) {
-            console.error("Error cargando imágenes:", error);
-        }
+    // Función para guardar el último mes y año visitados
+    function saveLastVisited(year, month) {
+        localStorage.setItem("lastYear", year);
+        localStorage.setItem("lastMonth", month);
     }
 
     // Función para generar el calendario
-    async function generateCalendar(year, month) {
+    function generateCalendar(year, month) {
         const calendarBody = document.getElementById("calendar-body");
         const currentMonthLabel = document.getElementById("currentMonth");
         const firstDay = new Date(year, month, 1).getDay(); // Día de la semana del primer día del mes
@@ -91,22 +58,33 @@ document.addEventListener("DOMContentLoaded", function () {
                     cell.innerHTML = `<span>${dayCounter}</span>`;
                     cell.dataset.date = dateKey; // Asignar la fecha como atributo
 
+
+                    // Agregar la clase "nine-day" al día 9
+                    if (dayCounter === 9) {
+                        cell.classList.add("nine-day");
+                    }
+
                     // Restaurar corazón si existe en los datos
                     if (heartsData[dateKey]) {
-                        const heartIcon = document.createElement("span");
+                        const heartIcon = document.createElement("img");
                         heartIcon.classList.add("heart");
-                        heartIcon.innerHTML = "❤️";
+                        heartIcon.src = "../img/corazones.png"; // Reemplaza con el enlace deseado
+                        heartIcon.alt = "Heart";
+                        heartIcon.style.width = "40px"; // Ajusta el tamaño
+                        heartIcon.style.height = "40px";
                         cell.appendChild(heartIcon);
-
-                        // Verificar si hay imágenes para esa fecha y agregar ícono de imagen
-                        const hasImages = await checkImagesForDate(dateKey);
-                        if (hasImages) {
-                            const imageIcon = document.createElement("span");
-                            imageIcon.classList.add("image-icon");
-                            imageIcon.innerHTML = "📷";
-                            cell.appendChild(imageIcon);
-                        }
                     }
+
+                    if (dayCounter === 9 && (year > 2024 || (year === 2024 && month >= 9))) {
+                        const romanticIcon = document.createElement("img"); // Cambiar a img
+                        romanticIcon.classList.add("romantic");
+                        romanticIcon.src = "../img/aniversario.png"; // Ruta de la imagen
+                        romanticIcon.alt = "Aniversario"; // Texto alternativo para la imagen
+                        romanticIcon.style.width = "40px"; // Ajusta el tamaño de la imagen
+                        romanticIcon.style.height = "40px"; // Ajusta el tamaño de la imagen
+                        cell.appendChild(romanticIcon);
+                    }
+                    
 
                     dayCounter++;
                 }
@@ -124,13 +102,21 @@ document.addEventListener("DOMContentLoaded", function () {
     // Función para cambiar de mes
     function changeMonth(offset) {
         currentMonth += offset;
-        if (currentMonth < 0) {
+        if (currentMonth < startMonth && currentYear === startYear) {
+            currentMonth = startMonth; // No permitir meses anteriores a septiembre 2024
+        } else if (currentMonth < 0) {
             currentMonth = 11;
             currentYear--;
         } else if (currentMonth > 11) {
             currentMonth = 0;
             currentYear++;
         }
+
+        if (currentYear === startYear && currentMonth < startMonth) {
+            currentMonth = startMonth; // Asegurar límite inferior
+        }
+
+        saveLastVisited(currentYear, currentMonth);
         generateCalendar(currentYear, currentMonth);
     }
 
@@ -145,9 +131,12 @@ document.addEventListener("DOMContentLoaded", function () {
             heart.remove();
             delete heartsData[dateKey]; // Quitar del almacenamiento
         } else {
-            const heartIcon = document.createElement("span");
+            const heartIcon = document.createElement("img");
             heartIcon.classList.add("heart");
-            heartIcon.innerHTML = "❤️";
+            heartIcon.src = "../img/corazones.png"; // Reemplaza con el enlace deseado
+            heartIcon.alt = "Heart";
+            heartIcon.style.width = "40px"; // Ajusta el tamaño
+            heartIcon.style.height = "40px";
             cell.appendChild(heartIcon);
             heartsData[dateKey] = true; // Agregar al almacenamiento
         }
@@ -160,5 +149,6 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("nextMonth").addEventListener("click", () => changeMonth(1));
 
     // Generar el calendario inicial
+    saveLastVisited(currentYear, currentMonth);
     generateCalendar(currentYear, currentMonth);
 });

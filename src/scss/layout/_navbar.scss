@@ -19,7 +19,8 @@ header {
 nav {
   font-family: "Vibur", cursive;
   font-size: 20px;
-  width: 30%;
+  width: auto !important;
+  max-width: 50%;
   margin: 0 auto;
   text-align: center;
   margin-top: 20px;
@@ -71,7 +72,7 @@ nav a:hover {
   transition: all 0.3s linear;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1200px) {
   nav {
     flex-direction: column;
     gap: 1rem;
@@ -87,9 +88,10 @@ nav a:hover {
   }
 }
 
-@media (max-width: 1768px) {
+@media (max-width: 1200px) {
   nav {
-    width: 40%;
+    width: 80% !important;
     gap: 1rem;
   }
 }
+

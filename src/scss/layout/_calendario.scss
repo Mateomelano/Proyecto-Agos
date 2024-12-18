@@ -1,39 +1,159 @@
-.calendar-table td {
-    width: 14.28%;
-    height: 100px;
-    vertical-align: top;
-    position: relative;
-    cursor: pointer;
+// Colores personalizados y configuración general
+$background-color: #fdf6f0; // Fondo principal del calendario
+$primary-color: #000000; // Color de texto principal
+$secondary-color: #ffc34d; // Color para elementos decorativos
+$heart-color: #4caf50; // Color de los corazones
+$border-color: #d4d4d4; // Color de los bordes de las celdas
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: $background-color;
+    margin: 0;
+    padding: 0;
 }
-.heart {
-    color: red;
-    font-size: 20px;
-    position: absolute;
-    top: 5px;
-    right: 5px;
+
+nav {
+    display: flex;
+    justify-content: center;
+    background-color: $secondary-color;
+    padding: 10px 0;
+
+    a {
+        text-decoration: none;
+        color: white;
+        margin: 0 15px;
+        font-weight: bold;
+        transition: color 0.3s;
+
+        &:hover {
+            color: #ff6f61;
+        }
+    }
 }
+
+// Contenedor principal
+.containerr {
+    background-color: white;
+    padding: 20px;
+    margin: 20px auto !important;
+    max-width: 1200px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 10rem !important;
+}
+
+@media (max-width: 1250px) {
+    .containerr {
+        max-width: 920px !important;
+    }
+}
+
+@media (max-width: 950px) {
+    .containerr {
+        max-width: 720px !important;
+    }
+}
+
+@media (max-width: 750px) {
+    .containerr {
+        max-width: 520px !important;
+    }
+}
+
+// Navegación de calendario
 .nav-buttons {
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    button {
+        background-color: $secondary-color;
+        border: none;
+        padding: 8px 16px;
+        color: white;
+        font-weight: bold;
+        border-radius: 8px;
+        cursor: pointer;
+
+        &:hover {
+            background-color: #ffb347;
+        }
+    }
+
+    h2 {
+        font-size: 8rem;
+        color: $primary-color;
+        margin: 0;
+        font-family: "Lovers Quarrel", serif;
+        font-weight: 600;
+    }
 }
 
+// Tabla del calendario
+.calendar-table {
 
-.image-icon {
-    margin-left: 5px;
-    cursor: pointer;
-    font-size: 1.2em;
-    color: #007BFF;
-    transition: transform 0.2s;
+    width: 100%;
+    border-collapse: collapse;
+
+    th {
+        background-color: $secondary-color;
+        color: white;
+        padding: 10px;
+        font-size: 1.5rem;
+        border: none;
+    }
+
+    td {
+        width: 14.28%;
+        height: 90px;
+        position: relative;
+        vertical-align: top;
+        border: 1px solid $border-color;
+        cursor: pointer;
+        border: none;
+
+        span {
+            display: block;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: $primary-color;
+            
+        }
+
+
+        // Corazones (con la imagen)
+        .heart {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            width: 25px;
+            height: 25px;
+        }
+
+        // Estilo especial para los días "9"
+        &.special-day {
+            background-color: rgba(255, 190, 205, 0.4);
+            border: 2px dashed $secondary-color;
+            border-radius: 10px;
+        }
+    }
 }
 
-.image-icon:hover {
-    transform: scale(1.2);
-}
+// Decoración del encabezado
+.calendar-header {
+    text-align: center;
+    margin: 20px 0;
 
-#imagesContainer img {
-    display: inline-block;
-    margin: 5px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    img {
+        width: 80px;
+        display: block;
+        margin: 0 auto 10px;
+    }
+
+    h2 {
+        font-family: 'Pacifico', cursive; // Fuente cursiva y decorativa
+        font-size: 2rem;
+        color: $primary-color;
+    }
 }

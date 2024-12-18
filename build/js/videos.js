@@ -66,6 +66,27 @@ function filterVideos(videos, specialVideoIds) {
     });
 }
 
+// Función para agregar la animación 3D a videos
+function handleMouseMove() {
+    const polaroidVideos = document.querySelectorAll('.polaroid-video');
+
+    polaroidVideos.forEach(polaroid => {
+        polaroid.addEventListener('mousemove', (e) => {
+            const { offsetWidth: width, offsetHeight: height } = polaroid;
+            const { offsetX: x, offsetY: y } = e;
+
+            const rotateX = (y / height - 0.5) * 20;
+            const rotateY = (x / width - 0.5) * -20;
+
+            polaroid.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
+        });
+
+        polaroid.addEventListener('mouseleave', () => {
+            polaroid.style.transform = 'rotateX(0deg) rotateY(0deg) scale(1)';
+        });
+    });
+}
+
 // Función para mostrar videos en una sección
 function displayVideos(videos, sectionTitle, container) {
     const section = document.createElement("div");
@@ -78,7 +99,7 @@ function displayVideos(videos, sectionTitle, container) {
 
     videos.forEach((video) => {
         const videoCard = document.createElement("div");
-        videoCard.classList.add("polaroid-video");
+        videoCard.classList.add("polaroid-video"); // Clase que aplica la animación 3D
 
         const iframe = document.createElement("iframe");
         const videoId = video.snippet.resourceId?.videoId || video.id.videoId;
@@ -118,6 +139,9 @@ async function loadVideos() {
         const filteredVideos = filterVideos(playlistVideos, specialVideoIds); // Excluir videos especiales
         displayVideos(filteredVideos, playlist.title, container);
     }
+
+    // 3. Agregar la animación 3D a los videos
+    handleMouseMove();
 }
 
 // Ejecutar la función al cargar la página
