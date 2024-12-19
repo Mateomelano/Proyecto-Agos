@@ -30,7 +30,7 @@ p{
 .book-content{
 	width: 100%;
 	min-width: 250px;
-	max-width: 800px;
+	max-width: 900px;
 	height: 700px;
 	position: relative;
 	perspective: 1000px;
@@ -39,7 +39,7 @@ p{
 .book{
 	position: absolute;
 	width: 65%;
-	height: 100%;
+	height: 110%;
 	transition: 1s;
 	transform-style: preserve-3d;
 	transform-origin: left; 
@@ -73,10 +73,10 @@ p{
 	border-bottom-right-radius: 3px;
 }
 #portada{
-	background: url('/Proyecto-Agos/build/img/portada.jpg');
+	background: url('../../../build/img/portada.jpg');
 }
 #portada-back{
-	background: url('/Proyecto-Agos/build/img/corazones.png');
+	background: url('../../../build/img/portada.jpg');
 }
 #portada, #portada-back{
 	background-size: 100% 100%;
@@ -98,8 +98,31 @@ p{
 		font-size: 12px;
 	}
 }
+@media screen and (max-width: 1650px){
+    .trnsf{
+        transform: translateX(300px);
+    }
+}
 
-@media screen and (max-width: 1230px){
+@media screen and (max-width: 1450px){
+    .trnsf{
+        transform: translateX(220px);
+    }
+    .trnsf-reset{
+        transform: translateX(0px);
+    }
+    .book-content{
+        width: 100%;
+        min-width: 250px;
+        max-width: 600px;
+        height: 600px;
+        position: relative;
+        perspective: 1000px;
+        transition: 1s;
+    }
+}
+
+@media screen and (max-width: 1250px){
     .trnsf{
         transform: translateX(180px);
     }
@@ -116,6 +139,7 @@ p{
         transition: 1s;
     }
 }
+
 
 @media screen and (max-width: 750px){
     .trnsf{
