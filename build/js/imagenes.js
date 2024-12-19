@@ -1,8 +1,20 @@
-const mockApiURL = "https://67603a526be7889dc35d40f7.mockapi.io/Fotos";
-const cloudinaryURL = "https://api.cloudinary.com/v1_1/dbraqaqko/image/upload"; // Cloud Name correcto
-const cloudinaryPreset = "ml_default"; // Upload Preset
+const mockApiURLs = [
+    "https://67603a526be7889dc35d40f7.mockapi.io/Fotos",
+    "https://67603a526be7889dc35d40f7.mockapi.io/Foto",
+    "https://676407bb17ec5852caeae5b5.mockapi.io/Fotos",
+    "https://676407bb17ec5852caeae5b5.mockapi.io/Foto",
+    "https://6764089117ec5852caeae967.mockapi.io/Fotos",
+    "https://6764089117ec5852caeae967.mockapi.io/Foto",
+    "https://6764094b17ec5852caeaec28.mockapi.io/Fotos",
+    "https://6764094b17ec5852caeaec28.mockapi.io/Foto",
+];
 
-// Función para manejar la inclinación de las imágenes
+const cloudinaryURLs = [
+    { url: "https://api.cloudinary.com/v1_1/dbraqaqko/image/upload", preset: "ml_default" },
+    { url: "https://api.cloudinary.com/v1_1/dsmlkepdq/image/upload", preset: "default2" },
+];
+
+
 function handleMouseMove() {
     const polaroids = document.querySelectorAll('.polaroid');
 
@@ -22,28 +34,97 @@ function handleMouseMove() {
         });
     });
 }
+// Función para realizar GET en todas las URLs de forma paralela
+async function fetchAllDataParallel(urls) {
+    const promises = urls.map(async (url) => {
+        try {
+            const response = await fetch(url);
+            if (response.ok) {
+                console.log(`Datos obtenidos de URL: ${url}`);
+                return await response.json();
+            } else {
+                console.warn(`Fallo en GET de URL: ${url}`);
+                return [];
+            }
+        } catch (error) {
+            console.error(`Error al intentar URL: ${url}`, error);
+            return [];
+        }
+    });
+
+    const results = await Promise.all(promises);
+    return results.flat();
+}
+
+// Función para realizar POST con respaldo en caso de error
+async function postWithFallback(urls, data) {
+    for (const url of urls) {
+        try {
+            const response = await fetch(url, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data),
+            });
+
+            if (response.ok) {
+                console.log(`Datos enviados correctamente a URL: ${url}`);
+                return;
+            } else {
+                console.warn(`Fallo en POST a URL: ${url}`);
+            }
+        } catch (error) {
+            console.error(`Error al intentar POST a URL: ${url}`, error);
+        }
+    }
+
+    throw new Error("Todas las URLs fallaron en el POST");
+}
+
+// Función para intentar subir imagen a múltiples URLs de Cloudinary
+async function uploadToCloudinaryFallback(file) {
+    for (const { url, preset } of cloudinaryURLs) {
+        try {
+            const formData = new FormData();
+            formData.append("file", file);
+            formData.append("upload_preset", preset);
+
+            const response = await fetch(url, {
+                method: "POST",
+                body: formData,
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                console.log(`Imagen subida exitosamente a Cloudinary: ${url}`);
+                return data.secure_url;
+            } else {
+                console.warn(`Fallo en subida a Cloudinary: ${url}`);
+            }
+        } catch (error) {
+            console.error(`Error subiendo a Cloudinary: ${url}`, error);
+        }
+    }
+
+    throw new Error("Todas las URLs de Cloudinary fallaron en la subida");
+}
 
 // Función para formatear las fechas
 function formatDate(dateString) {
-    const [year, month, day] = dateString.split("-"); // Suponiendo formato ISO "YYYY-MM-DD"
+    const [year, month, day] = dateString.split("-");
     const heart = day === "09" ? "❤️" : "";
     return `${heart}${day}/${month}/${year}${heart}`;
 }
 
-
 // Cargar imágenes desde MockAPI
-async function loadImages(filterDate = 'todas') {
+async function loadImages(filterDate = "todas") {
     try {
-        const response = await fetch(mockApiURL);
-        const images = await response.json();
+        const images = await fetchAllDataParallel(mockApiURLs);
 
-        // Filtrar por fecha si no es 'todas'
-        const filteredImages = filterDate === 'todas' ? images : images.filter(image => image.fecha === filterDate);
+        const filteredImages = filterDate === "todas" ? images : images.filter(image => image.fecha === filterDate);
 
         const container = document.getElementById("imagesContainer");
         container.innerHTML = "";
 
-        // Agrupar imágenes por fecha
         const groupedImages = {};
         filteredImages.forEach((image) => {
             if (!groupedImages[image.fecha]) {
@@ -52,7 +133,6 @@ async function loadImages(filterDate = 'todas') {
             groupedImages[image.fecha].push(image);
         });
 
-        // Recorrer las fechas y mostrar las imágenes agrupadas
         Object.keys(groupedImages).sort((a, b) => new Date(a) - new Date(b)).forEach((date) => {
             const dateContainer = document.createElement("div");
             dateContainer.classList.add("date-group");
@@ -68,68 +148,42 @@ async function loadImages(filterDate = 'todas') {
                 img.src = image.url;
                 img.alt = "Imagen subida";
 
-                // **Agregar atributos AOS**
                 img.setAttribute("data-aos", "fade-up");
                 img.setAttribute("data-aos-anchor-placement", "center-bottom");
 
-                // Detectar si la imagen es horizontal
                 img.onload = () => {
                     if (img.naturalWidth > img.naturalHeight) {
                         img.classList.add("horizontal");
-                        
                     }
                 };
 
                 img.addEventListener("click", () => {
-                    if (img.width > img.height) {
-                        Swal.fire({
-                            imageUrl: image.url,
-                            imageAlt: "Imagen ampliada",
-                            width: 1200,
-                            height: 1200,
-                            didOpen: () => {
-                                img.setAttribute("data-aos", "fade-up");
-                                img.setAttribute("data-aos-anchor-placement", "center-bottom");
-                            },
-                            showCloseButton: true,
-                            showConfirmButton: false,
-                            customClass: {
-                                popup: "enlarged-image-modal",
-                            },
-                        });
-                    } else {
-                        Swal.fire({
-                            imageUrl: image.url,
-                            imageAlt: "Imagen ampliada",
-                            width: 1000,
-                            height: 800,
-                            didOpen: () => {
-                                img.setAttribute("data-aos", "fade-up");
-                                img.setAttribute("data-aos-anchor-placement", "center-bottom");
-                            },
-                            showCloseButton: true,
-                            showConfirmButton: false,
-                            customClass: {
-                                popup: "enlarged-image-modal",
-                            },
-                        });
-                    }
+                    Swal.fire({
+                        imageUrl: image.url,
+                        imageAlt: "Imagen ampliada",
+                        width: img.naturalWidth > img.naturalHeight ? 1200 : 1000,
+                        height: img.naturalWidth > img.naturalHeight ? 1200 : 800,
+                        showCloseButton: true,
+                        showConfirmButton: false,
+                        customClass: { popup: "enlarged-image-modal" },
+                    });
                 });
+
                 div.appendChild(img);
                 imagesWrapper.appendChild(div);
             });
 
-            // Agregar fecha ANTES de las imágenes con formato día/mes/año
             const dateLine = document.createElement("div");
             dateLine.classList.add("date-line");
-            dateLine.textContent = formatDate(date); // Usar formato personalizado
+            dateLine.textContent = formatDate(date);
 
-            dateContainer.appendChild(dateLine); // Agregar fecha
-            dateContainer.appendChild(imagesWrapper); // Agregar imágenes
-            container.appendChild(dateContainer); // Agregar al contenedor principal
+            dateContainer.appendChild(dateLine);
+            dateContainer.appendChild(imagesWrapper);
+            container.appendChild(dateContainer);
         });
 
         handleMouseMove();
+
     } catch (error) {
         console.error("Error cargando imágenes:", error);
     }
@@ -138,8 +192,7 @@ async function loadImages(filterDate = 'todas') {
 // Cargar fechas únicas y agregarlas al filtro
 async function loadDates() {
     try {
-        const response = await fetch(mockApiURL);
-        const images = await response.json();
+        const images = await fetchAllDataParallel(mockApiURLs);
 
         const dates = [...new Set(images.map(image => image.fecha))];
         dates.sort((a, b) => new Date(a) - new Date(b));
@@ -149,7 +202,7 @@ async function loadDates() {
         dates.forEach(date => {
             const option = document.createElement("option");
             option.value = date;
-            option.textContent = formatDate(date); // Usar formato personalizado
+            option.textContent = formatDate(date);
             dateFilter.appendChild(option);
         });
 
@@ -190,21 +243,8 @@ document.getElementById("imageInput").addEventListener("change", async (e) => {
             return;
         }
 
-        const formData = new FormData();
-        formData.append("file", imageFile);
-        formData.append("upload_preset", cloudinaryPreset);
-
-        const response = await fetch(cloudinaryURL, { method: "POST", body: formData });
-        if (!response.ok) throw new Error("Error en la subida a Cloudinary");
-
-        const data = await response.json();
-        const imageUrl = data.secure_url;
-
-        await fetch(mockApiURL, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ url: imageUrl, fecha }),
-        });
+        const imageUrl = await uploadToCloudinaryFallback(imageFile);
+        await postWithFallback(mockApiURLs, { url: imageUrl, fecha });
 
         Swal.fire("Éxito", "Imagen subida correctamente", "success");
         loadImages();

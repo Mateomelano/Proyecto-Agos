@@ -31,6 +31,7 @@ body {
         object-fit: contain;
         max-height: 220px; // Ajusta el alto máximo de la imagen
         margin: 0 auto;
+        cursor: pointer;
     }
 
     // Formato horizontal
@@ -78,7 +79,7 @@ body {
     font-family: "Roboto Mono", monospace;
     font-weight: 500;
     border: 2px solid #ddd;
-    border-radius: 5px;
+    border-radius: 25px;
     background-color: #f9f9f9;
     margin-top: 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -87,6 +88,8 @@ body {
 option {
     font-family: "Roboto Mono", monospace;
     font-weight: 500;
+    border: 2px solid #ddd;
+    border-radius: 25px;
 }
 
 

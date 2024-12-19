@@ -630,6 +630,7 @@ body {
   object-fit: contain;
   max-height: 220px;
   margin: 0 auto;
+  cursor: pointer;
 }
 .polaroid.horizontal {
   width: 250px;
@@ -671,7 +672,7 @@ body {
   font-family: "Roboto Mono", monospace;
   font-weight: 500;
   border: 2px solid #ddd;
-  border-radius: 5px;
+  border-radius: 25px;
   background-color: #f9f9f9;
   margin-top: 10px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -680,6 +681,8 @@ body {
 option {
   font-family: "Roboto Mono", monospace;
   font-weight: 500;
+  border: 2px solid #ddd;
+  border-radius: 25px;
 }
 
 .date-group {
@@ -846,6 +849,150 @@ body {
   margin-top: 8px;
   font-size: 16px;
   font-weight: bold;
+}
+
+body {
+  background: linear-gradient(to bottom, #fdf1ff, #d3eaff, #fef8e4);
+  background-attachment: fixed;
+  margin: 0;
+  padding: 0;
+}
+
+ody {
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.8) 1px, transparent 1px);
+  background-color: #ffe7f9;
+  background-size: 10px 10px;
+  margin: 0;
+  padding: 0;
+}
+
+p {
+  margin: 10px;
+  font-size: 13px;
+  text-align: justify;
+  font-family: "Roboto Mono", monospace;
+}
+
+.containerbook, .book-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.containerbook {
+  width: 100%;
+  height: 100vh;
+}
+
+.book-content {
+  width: 100%;
+  min-width: 250px;
+  max-width: 800px;
+  height: 700px;
+  position: relative;
+  perspective: 1000px;
+  transition: 1s;
+}
+
+.book {
+  position: absolute;
+  width: 65%;
+  height: 100%;
+  transition: 1s;
+  transform-style: preserve-3d;
+  transform-origin: left;
+}
+
+.face-front, .face-back {
+  width: 100%;
+  height: 100%;
+  background: #f5f0e6; /* Un color crema más natural */
+  padding: 20px;
+  box-sizing: border-box;
+  overflow: hidden;
+  border: 1px solid #c4b89a; /* Borde más cálido */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), inset 0 0 15px rgba(0, 0, 0, 0.05); /* Sombra con más contraste */
+  background-image: url("https://www.transparenttextures.com/patterns/white-wall.png"); /* Textura más rugosa */
+  background-size: cover;
+  border-radius: 10px; /* Esquinas ligeramente más redondeadas */
+}
+
+.face-front {
+  box-shadow: inset 3px 0px 20px -7px black;
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+
+.face-back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translateZ(-1px) rotateY(180deg);
+  box-shadow: inset -3px 1px 20px -7px black;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+
+#portada {
+  background: url("/Proyecto-Agos/build/img/portada.jpg");
+}
+
+#portada-back {
+  background: url("/Proyecto-Agos/build/img/corazones.png");
+}
+
+#portada, #portada-back {
+  background-size: 100% 100%;
+}
+
+/* Clases que se agregaran con Javascript */
+.trnsf {
+  transform: translateX(240px);
+}
+
+.trnsf-reset {
+  transform: translateX(0px);
+}
+
+/* @media para hacer el texto responsivo */
+@media screen and (max-width: 800px) {
+  p {
+    font-size: 12px;
+  }
+}
+@media screen and (max-width: 1230px) {
+  .trnsf {
+    transform: translateX(180px);
+  }
+  .trnsf-reset {
+    transform: translateX(0px);
+  }
+  .book-content {
+    width: 100%;
+    min-width: 250px;
+    max-width: 600px;
+    height: 600px;
+    position: relative;
+    perspective: 1000px;
+    transition: 1s;
+  }
+}
+@media screen and (max-width: 750px) {
+  .trnsf {
+    transform: translateX(150px);
+  }
+  .trnsf-reset {
+    transform: translateX(0px);
+  }
+  .book-content {
+    width: 100%;
+    min-width: 250px;
+    max-width: 400px;
+    height: 500px;
+    position: relative;
+    perspective: 1000px;
+    transition: 1s;
+  }
 }
 
 /*# sourceMappingURL=app.css.map */
