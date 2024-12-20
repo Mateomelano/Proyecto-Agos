@@ -599,6 +599,13 @@ nav a:hover {
     gap: 1rem;
   }
 }
+nav a.active {
+  background-color: #0078d7; /* Fondo azul */
+  color: #fff; /* Texto blanco */
+  border: 2px solid #ffffff; /* Borde blanco */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Sombra para resaltar */
+}
+
 body {
   font-family: "Roboto Mono", monospace;
 }
@@ -858,19 +865,19 @@ body {
   padding: 0;
 }
 
-ody {
-  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.8) 1px, transparent 1px);
-  background-color: #ffe7f9;
-  background-size: 10px 10px;
-  margin: 0;
-  padding: 0;
-}
-
 p {
   margin: 10px;
   font-size: 13px;
+  line-height: 2.2;
   text-align: justify;
-  font-family: "Roboto Mono", monospace;
+}
+
+#txt {
+  margin: 10px;
+  font-size: 13px;
+  line-height: 2.2;
+  text-align: justify;
+  font-weight: 510 !important;
 }
 
 .containerbook, .book-content {
@@ -887,7 +894,7 @@ p {
 .book-content {
   width: 100%;
   min-width: 250px;
-  max-width: 900px;
+  max-width: 850px;
   height: 700px;
   position: relative;
   perspective: 1000px;
@@ -906,15 +913,15 @@ p {
 .face-front, .face-back {
   width: 100%;
   height: 100%;
-  background: #f5f0e6; /* Un color crema más natural */
-  padding: 20px;
+  background: #f5f0e6; /* Fondo crema */
+  padding: 30px;
   box-sizing: border-box;
   overflow: hidden;
-  border: 1px solid #c4b89a; /* Borde más cálido */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), inset 0 0 15px rgba(0, 0, 0, 0.05); /* Sombra con más contraste */
-  background-image: url("https://www.transparenttextures.com/patterns/white-wall.png"); /* Textura más rugosa */
+  border: 1px solid #c4b89a; /* Borde cálido */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), inset 0 0 15px rgba(0, 0, 0, 0.05);
+  background-image: url("https://www.transparenttextures.com/patterns/white-wall.png");
   background-size: cover;
-  border-radius: 10px; /* Esquinas ligeramente más redondeadas */
+  border-radius: 10px; /* Bordes redondeados */
 }
 
 .face-front {
@@ -934,11 +941,11 @@ p {
 }
 
 #portada {
-  background: url("../../../build/img/portada.jpg");
+  background: url("/Proyecto-Agos/build/img/portada.jpg");
 }
 
 #portada-back {
-  background: url("../../../build/img/portada.jpg");
+  background: url("/Proyecto-Agos/build/img/portada.jpg");
 }
 
 #portada, #portada-back {
@@ -1015,6 +1022,18 @@ p {
     perspective: 1000px;
     transition: 1s;
   }
+}
+.page-indicator {
+  position: absolute;
+  bottom: 10px; /* Ajusta según sea necesario */
+  right: 15px; /* Ajusta según sea necesario */
+  color: #000000; /* Texto blanco */
+  font-size: 12px; /* Tamaño del texto */
+  font-weight: 800;
+  padding: 5px 10px; /* Espaciado interno */
+  border-radius: 15px; /* Borde redondeado */
+  font-family: "Roboto Mono", monospace; /* Fuente consistente */
+  text-align: center;
 }
 
 /*# sourceMappingURL=app.css.map */

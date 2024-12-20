@@ -1,4 +1,20 @@
 document.addEventListener("DOMContentLoaded", function () {
+    // Selecciona todos los enlaces dentro del nav
+    const navLinks = document.querySelectorAll('nav a');
+
+    // Obtén la URL actual de la página
+    const currentPath = window.location.pathname;
+
+    // Marca el enlace activo y desmarca los demás
+    navLinks.forEach(link => {
+        // Compara el pathname del enlace con el pathname actual
+        if (link.pathname === currentPath) {
+            link.classList.add('active'); // Agrega la clase 'active' al enlace actual
+        } else {
+            link.classList.remove('active'); // Remueve la clase 'active' de los demás
+        }
+    });
+
     // Variables iniciales
     let currentYear = localStorage.getItem("lastYear") ? parseInt(localStorage.getItem("lastYear")) : 2024;
     let currentMonth = localStorage.getItem("lastMonth") ? parseInt(localStorage.getItem("lastMonth")) : 8; // Septiembre
@@ -84,7 +100,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         romanticIcon.style.height = "40px"; // Ajusta el tamaño de la imagen
                         cell.appendChild(romanticIcon);
                     }
-                    
+
 
                     dayCounter++;
                 }
@@ -151,4 +167,6 @@ document.addEventListener("DOMContentLoaded", function () {
     // Generar el calendario inicial
     saveLastVisited(currentYear, currentMonth);
     generateCalendar(currentYear, currentMonth);
+
 });
+

@@ -2,6 +2,7 @@ const apiKey = "AIzaSyCCQfBn0QlqKmPUbaZosV-vbn7GMi16RlE"; // Tu clave API de You
 const channelId = "UClPKb4gAG26gYP-PFufA0wQ"; // ID del canal
 const maxResults = 10; // Número de videos a mostrar
 
+
 // IDs de las playlists
 const playlists = [
     { id: "PLZIEfzWIUc6pg0GbH9BNDW9k8saHrHRi0", title: "Románticos" },
@@ -146,3 +147,20 @@ async function loadVideos() {
 
 // Ejecutar la función al cargar la página
 document.addEventListener("DOMContentLoaded", loadVideos);
+
+
+// Selecciona todos los enlaces dentro del nav
+const navLinks = document.querySelectorAll('nav a');
+
+// Obtén la URL actual de la página
+const currentPath = window.location.pathname;
+
+// Marca el enlace activo y desmarca los demás
+navLinks.forEach(link => {
+    // Compara el pathname del enlace con el pathname actual
+    if (link.pathname === currentPath) {
+        link.classList.add('active'); // Agrega la clase 'active' al enlace actual
+    } else {
+        link.classList.remove('active'); // Remueve la clase 'active' de los demás
+    }
+});

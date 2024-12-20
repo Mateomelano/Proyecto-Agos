@@ -95,3 +95,10 @@ nav a:hover {
   }
 }
 
+
+nav a.active {
+  background-color: #0078d7; /* Fondo azul */
+  color: #fff; /* Texto blanco */
+  border: 2px solid #ffffff; /* Borde blanco */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Sombra para resaltar */
+}
