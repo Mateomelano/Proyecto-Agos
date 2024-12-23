@@ -877,7 +877,8 @@ p {
   font-size: 13px;
   line-height: 2.2;
   text-align: justify;
-  font-weight: 510 !important;
+  font-weight: 530 !important;
+  color: #353533;
 }
 
 .containerbook, .book-content {
@@ -941,11 +942,11 @@ p {
 }
 
 #portada {
-  background: url("/Proyecto-Agos/build/img/portada.jpg");
+  background: url("../../../build/img/portada.jpg");
 }
 
 #portada-back {
-  background: url("/Proyecto-Agos/build/img/portada.jpg");
+  background: url("../../../build/img/portada.jpg");
 }
 
 #portada, #portada-back {
@@ -1004,6 +1005,12 @@ p {
     position: relative;
     perspective: 1000px;
     transition: 1s;
+  }
+  p {
+    font-size: 10px;
+  }
+  #txt {
+    font-size: 10px;
   }
 }
 @media screen and (max-width: 750px) {
