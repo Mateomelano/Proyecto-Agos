@@ -39,27 +39,34 @@
     <a href="calendario.html">Calendario</a>
     <a href="historia.html">Historia</a>
   </nav>
-   <!-- Contenedor para partículas -->
-   <div id="particles-js"></div>
+  <!-- Contenedor para partículas -->
+  <div id="particles-js"></div>
 
-   <!-- Contenido principal -->
-   <div class="welcome-container">
-     <h1>Bienvenido a Nuestra Página</h1>
-     <p>Explora las diferentes secciones:</p>
-     <div class="buttons">
-       <a href="imagenes.html" class="btn">Imágenes</a>
-       <a href="videos.html" class="btn">Videos</a>
-       <a href="calendario.html" class="btn">Calendario</a>
-       <a href="historia.html" class="btn">Historia</a>
-     </div>
-   </div>
- 
-   <!-- Script para particles.js -->
+  <!-- Contenido principal -->
+  <div class="welcome-container">
+    <h1>Bienvenido a Nuestra Página</h1>
+    <p>Explora las diferentes secciones:</p>
+    <div class="buttons">
+      <a href="imagenes.html" class="btn">Imágenes</a>
+      <a href="videos.html" class="btn">Videos</a>
+      <a href="calendario.html" class="btn">Calendario</a>
+      <a href="historia.html" class="btn">Historia</a>
+    </div>
+  </div>
+
+  <!-- Script para particles.js -->
   <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
   <script src="../js/particles-config.js"></script>
   <script src="../js/nav.js"></script>
   <script src="../js/inicio.js"></script>
-
+  <script>
+    window.addEventListener('load', () => {
+      window.scrollTo({
+        top: 100, // Ajusta el valor para que el nav quede oculto como desees
+        behavior: 'smooth'
+      });
+    });
+  </script>
 </body>
 
 </html>
