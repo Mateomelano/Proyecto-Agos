@@ -1,7 +1,7 @@
 // Colores personalizados y configuración general
 $background-color: #fdf6f0; // Fondo principal del calendario
 $primary-color: #000000; // Color de texto principal
-$secondary-color: #ffc34d; // Color para elementos decorativos
+$secondary-gradient: linear-gradient(5deg, #a557e6, #e41da5); // Degradado para elementos decorativos
 $heart-color: #4caf50; // Color de los corazones
 $border-color: #d4d4d4; // Color de los bordes de las celdas
 
@@ -15,7 +15,7 @@ body {
 nav {
     display: flex;
     justify-content: center;
-    background-color: $secondary-color;
+    background: $secondary-gradient; // Aplicar el degradado
     padding: 10px 0;
 
     a {
@@ -26,7 +26,7 @@ nav {
         transition: color 0.3s;
 
         &:hover {
-            color: #ff6f61;
+            color: #ffb3a7;
         }
     }
 }
@@ -67,7 +67,7 @@ nav {
     align-items: center;
 
     button {
-        background-color: $secondary-color;
+        background: $secondary-gradient; // Aplicar el degradado
         border: none;
         padding: 8px 16px;
         color: white;
@@ -76,7 +76,7 @@ nav {
         cursor: pointer;
 
         &:hover {
-            background-color: #ffb347;
+            background: lighten(#b861ff, 10%); // Ajuste para hover (puedes personalizarlo)
         }
     }
 
@@ -91,12 +91,11 @@ nav {
 
 // Tabla del calendario
 .calendar-table {
-
     width: 100%;
     border-collapse: collapse;
 
     th {
-        background-color: $secondary-color;
+        background: $secondary-gradient; // Aplicar el degradado al encabezado
         color: white;
         padding: 10px;
         font-size: 1.5rem;
@@ -118,9 +117,7 @@ nav {
             font-size: 1.5rem;
             font-weight: bold;
             color: $primary-color;
-            
         }
-
 
         // Corazones (con la imagen)
         .heart {
@@ -134,7 +131,7 @@ nav {
         // Estilo especial para los días "9"
         &.special-day {
             background-color: rgba(255, 190, 205, 0.4);
-            border: 2px dashed $secondary-color;
+            border: 2px dashed #b861ff;
             border-radius: 10px;
         }
     }

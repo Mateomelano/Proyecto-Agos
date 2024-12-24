@@ -8,6 +8,9 @@
     <link rel="icon" href="../img/cupido.png" type="image/x-icon">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- JSPDF CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
     <link rel="stylesheet" href="../css/app.css" />
     <!-- SweetAlert2 CDN -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -42,7 +45,7 @@
         <a href="calendario.html">Calendario</a>
         <a href="historia.html" class="active">Historia</a>
     </nav>
-
+    <div id="particles-js"></div>
     <div class="containerbook" id="container">
         <div class="book-content">
             <!-- Página 1 -->
@@ -91,13 +94,16 @@
                         Luego de algunas juntadas llego el primer beso, momento que nunca me voy a olvidar y no solo por
                         lo lindo si no por lo que me costo dar ese paso, siempre la vi como alguien tan especial y algo
                         tan preciado que siempre temi en dar un paso en
-                        falso y hacer algo que ella no quisiera, por suerte el beso fue aceptado.</p>
+                        falso y hacer algo que ella no quisiera, por suerte el beso fue aceptado.
+                        <br>
+                        El tiempo fue pasando y las cosas lindas fueron llegando, empezamos con los regalos, las cartas,
+                        los chocolates, jamas voy a olvidar el primer dia que fui a comprar materiales para hacer
+                        regalos
+                    </p>
                     <div class="page-indicator">2</div>
                 </div>
                 <div class="face-back">
-                    <p>El tiempo fue pasando y las cosas lindas fueron llegando, empezamos con los regalos, las cartas,
-                        los chocolates, jamas voy a olvidar el primer dia que fui a comprar materiales para hacer
-                        regalos, cuando llegue a casa y puse todo en la
+                    <p> cuando llegue a casa y puse todo en la
                         mesa, me di cuenta que jamas habia tenido el esmero que tuve por esta persona, jamas voy a
                         olvidar el dia (un jueves feriado) que fuimos a la costanera y ella me regalo un saphirus de
                         frutos patagonicos y un paquete de doritos, fue un
@@ -107,10 +113,17 @@
                         el detalle de comprarmelo para mi, y aunque ella ya me habia conquistado mucho tiempo atras con
                         esa mirada dulce y hermosa que tiene que me lleva a lugares donde nunca estuve, ese fue un gesto
                         que jamas voy a olvidar, si antes de eso
-                        me desvivia por su amor, ahora muchisimo mas. La historia siguio, otra fecha que se me hace
+                        me desvivia por su amor, ahora muchisimo mas.
+                        <br>
+                        <br>
+                        Otra fecha que se me hace
                         imposible olvidar fue el 26/10/2024, fecha clave en nuestra historia en consideracion mia, luego
                         de ir a nuestro bar de confianza decidimos ir a nuestro lugar del mundo, nuestro spot y luego
-                        de una larga noche</p>
+                        de una larga noche volviendo a casa, ya super enamorados los dos, no pude evitar decir te amo a
+                        lo que ella replico
+                        con lo mismo, todavia lo recuerdo y no puedo evitar que se me piante una lagrima al escribir
+                        esto, a raiz de eso tambien
+                    </p>
                     <div class="page-indicator">3</div>
                 </div>
             </div>
@@ -118,9 +131,7 @@
             <!-- Página 3 -->
             <div class="book">
                 <div class="face-front">
-                    <p>volviendo a casa, ya super enamorados los dos, no pude evitar decir te amo a lo que ella replico
-                        con lo mismo, todavia lo recuerdo y no puedo evitar que se me piante una lagrima al escribir
-                        esto, a raiz de eso tambien
+                    <p id="txt">
                         tenemos nuestra primer foto en el auto. Y de ese momento en adelante empezamos a ser lo que se
                         llama novios sin titulo. Ir de la mano juntos, decirnos cosas hermosas, hablar mucho mas
                         seguido, besos, caricias y mimos, hasta que llego el dia...
@@ -133,19 +144,27 @@
                         fueron 50, me desvele toda la semana para realizar un regalo y un presente acorde a lo que era
                         la persona y la ocasion, y no me arrepiento de ningun minuto gastado, el momento llego y por
                         suerte la respuesta fue si, si yo ya era el tipo mas
-                        feliz del mundo a su lado, ahora el tipo mas feliz del universo.</p>
+                        feliz del mundo a su lado, ahora el tipo mas feliz del universo.
+                        <br>
+                        Luego de ser novios, puedo decir que no hubo decisión mas acertada en mi vida que decidir pasar
+                        el resto de mi vida con ella, sigo encontrando la mujer que siempre soñe, en sus ojos veo la
+                        razón, veo la calma y en ella veo
+                        el sentido a seguir para adelante todos los días todo eso me hace estar dispuesto a superar los
+                        vaivenes de la vida, la forma que
+
+                    </p>
                     <div class="page-indicator">4</div>
                 </div>
                 <div class="face-back">
-                    <p>Luego de ser novios, puedo decir que no hubo decisión mas acertada en mi vida que decidir pasar
-                        el resto de mi vida con ella, sigo encontrando la mujer que siempre soñe, en sus ojos veo la
-                        razón, veo la calma y en ella veo
-                        el sentido a seguir para adelante todos los días, todo eso me hace estar dispuesto a superar los
-                        vaivenes de la vida, la forma que ella me ayuda a salir de mis malos momentos me hace entender
+                    <p>
+                        ella me ayuda a salir de mis malos momentos me hace entender
                         que voy a estar hasta mi ultimo dia en
                         este mundo a su lado, por ello, quería escribir esta breve historia en este humilde libro, dejar
                         en escrito lo que siento para poder acceder en cualquier momento, y nunca olvidar lo que siento
-                        por vos. Te amo. Agostina . Te amo.</p>
+                        por vos.
+                        <br>
+                        Te amo. Te amo. Agostina. Te amo.
+                    </p>
                     <div class="page-indicator">5</div>
                 </div>
             </div>
@@ -153,7 +172,9 @@
             <!-- Página 4 -->
             <div class="book">
                 <div class="face-front">
-                    <p>Carta Primer Aniversario:
+                    <p id="txt">Carta Primer Aniversario:
+                        <br>
+                        <br>
                         Amor de mi vida, ya un mes de estar juntos, y no tengo mas que palabras hermosas para tu ser,
                         día a día me demostras lo que sos y eso me hace pensar en lo afortunado que soy de tener
                         una persona como vos a mi lado, sos mi razón de vivir y sos la que me ayuda a salir adelante
@@ -171,19 +192,15 @@
                         se haga posible, hace que deje mi vida de lado por tu bienestar y tu cariño, porque el amor es
                         mas fuerte y tu amor lo es aun mas.
                         gracias por haberme dado estos días, que sin duda fueron los mas felices de mi vida y vamos por
-                        mas, por mucho mas, por toda la vida. te amo.</p>
+                        mas, por mucho mas, por toda la vida. te amo.
+                    </p>
                     <div class="page-indicator">6</div>
                 </div>
                 <div class="face-back">
-                    <p></p>
-                    <div class="page-indicator">
-                    </div>
-                </div>
-            </div>
-            <!-- Página 5 -->
-            <div class="book">
-                <div class="face-front">
-                    <p>Carta Segundo Aniversario:
+                    <p>
+                        Carta Segundo Aniversario:
+                        <br>
+                        <br>
                         Mi corazon, escribo esta carta para ponerte en palabras y de alguna forma decirte gracias, no
                         encuentro mas formas de decirlo, no alcanza ni con regalos, ni palabras, ni canciones, ni
                         gestos, voy a estar toda la vida agradecido
@@ -198,13 +215,21 @@
                         querer hablando de vos, cantando para
                         vos, escribiendo y pensando en vos, te amo mi vida, y aunque vos digas que haces lo mínimo por
                         mi, los dos bien sabemos que no es asi, jamás en mi vida imagine, ni pensé, ni soñe en encontrar
-                        a una mujer como vos, una mujer que me
-                        completa, una mujer que me contiene y me apoya con mis problemas, una mujer que hace que salga
-                        adelante, que esta conmigo en toda adversidad y es el motor que moviliza para enfrentar los
-                        problemas de la vida, y eso para mi es muchi
-                        sino mas que lo mínimo, y por eso voy a estar agradecido eternamente, con vos y con la vida que
-                        me dio la suerte de encontrarme con una mujer como vos.
+                        a una mujer como vos, una mujer que me completa, una mujer que me contiene y me apoya con mis
+                        problemas, una mujer que hace que salga
+                        adelante que esta conmigo en toda adversidad
                     </p>
+                    <div class="page-indicator">
+                    </div>
+                </div>
+            </div>
+            <!-- Página 5 -->
+            <div class="book">
+                <div class="face-front">
+                    <p id="txt"> y es el motor que moviliza para enfrentar los
+                        problemas de la vida, y eso para mi es muchisimo mas que lo mínimo, y por eso voy a estar
+                        agradecido eternamente, con vos y con la vida que
+                        me dio la suerte de encontrarme con una mujer como vos.</p>
                     <div class="page-indicator">7</div>
                 </div>
                 <div class="face-back" id="portada-back">
@@ -217,6 +242,9 @@
     </div>
 
     <script src="../js/historia.js"></script>
+    <!-- Script para particles.js -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="../js/particles-config.js"></script>
 </body>
 
 

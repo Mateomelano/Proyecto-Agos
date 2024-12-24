@@ -13,3 +13,4 @@ navLinks.forEach(link => {
     link.classList.remove('active'); // Remueve la clase 'active' de los demás
   }
 });
+

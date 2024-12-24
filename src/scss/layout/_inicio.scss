@@ -1,0 +1,56 @@
+/* Fondo animado de partículas */
+#particles-js {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Detrás del contenido */
+  }
+  
+  /* Contenido principal */
+  .welcome-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    text-align: center;
+    color: #333;
+    z-index: 1; /* Por encima del fondo */
+  }
+  
+  .welcome-container h1 {
+    font-size: 3rem;
+    font-family: 'Pacifico', cursive;
+    margin-bottom: 1rem;
+  }
+  
+  .welcome-container p {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  /* Botones estilizados */
+  .buttons {
+    display: flex;
+    gap: 15px;
+  }
+  
+  .btn {
+    text-decoration: none;
+    background: linear-gradient(45deg, #ff6b6b, #f9ca24);
+    color: white;
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-radius: 25px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  
+  .btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+  }
+  
