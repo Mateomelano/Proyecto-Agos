@@ -609,6 +609,7 @@ nav a:hover {
     align-items: center;
   }
   nav.sidebar {
+    z-index: 999;
     font-family: "Vibur", cursive;
     font-size: 20px;
     position: fixed;
