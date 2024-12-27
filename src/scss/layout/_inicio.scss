@@ -66,3 +66,9 @@
     box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3), inset 0 -5px 10px rgba(255, 255, 255, 0.5);
   }
   
+  /* Media query para dispositivos pequeños */
+  @media (max-width: 768px) {
+    .buttons {
+      flex-direction: column;
+    }
+  }

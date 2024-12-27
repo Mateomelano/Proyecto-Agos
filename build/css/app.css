@@ -1130,6 +1130,12 @@ p {
     perspective: 1000px;
     transition: 1s;
   }
+  p {
+    font-size: 7px;
+  }
+  #txt {
+    font-size: 7px;
+  }
 }
 .page-indicator {
   position: absolute;
@@ -1210,6 +1216,13 @@ p {
 .btn:hover {
   transform: translateY(-5px) scale(1.05); /* Flotar hacia arriba */
   box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3), inset 0 -5px 10px rgba(255, 255, 255, 0.5);
+}
+
+/* Media query para dispositivos pequeños */
+@media (max-width: 768px) {
+  .buttons {
+    flex-direction: column;
+  }
 }
 
 /*# sourceMappingURL=app.css.map */
