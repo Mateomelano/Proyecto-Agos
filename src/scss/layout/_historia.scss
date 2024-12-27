@@ -74,10 +74,10 @@ p{
     
 }
 #portada{
-	background: url('../../../build/img/portada.jpg');
+	background: url('https://res.cloudinary.com/dbraqaqko/image/upload/v1735337287/portada_wmlpbh.jpg');
 }
 #portada-back{
-	background: url('../../../build/img/portada.jpg');;
+	background: url('https://res.cloudinary.com/dbraqaqko/image/upload/v1735337287/portada_wmlpbh.jpg');
 }
 #portada, #portada-back{
 	background-size: 100% 100%;
@@ -163,18 +163,18 @@ p{
     }
     .book-content{
         width: 100%;
-        min-width: 250px;
-        max-width: 400px;
+        min-width: 200px;
+        max-width: 300px;
         height: 500px;
         position: relative;
         perspective: 1000px;
         transition: 1s;
     }
     p{
-        font-size: 7px;
+        font-size: 5px;
     }
     #txt{
-        font-size: 7px;
+        font-size: 5px;
     }
 }
 

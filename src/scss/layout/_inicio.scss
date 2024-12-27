@@ -42,11 +42,11 @@
   
   /* Botones estilizados */
   .buttons {
-    display: flex;
+    display: flex !important;
     gap: 20px;
   }
   
-  .btn {
+  .buttons a {
     text-decoration: none;
     background: linear-gradient(45deg, #ff9ff3, #feca57); /* Colores pastel */
     color: white;
@@ -61,7 +61,7 @@
   }
   
   /* Hover en los botones */
-  .btn:hover {
+  .buttons a:hover {
     transform: translateY(-5px) scale(1.05); /* Flotar hacia arriba */
     box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3), inset 0 -5px 10px rgba(255, 255, 255, 0.5);
   }

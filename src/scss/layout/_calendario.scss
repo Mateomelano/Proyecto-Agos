@@ -56,7 +56,16 @@ nav {
 
 @media (max-width: 750px) {
     .containerr {
-        max-width: 520px !important;
+        max-width: 400px !important;
+    }
+    .nav-buttons {
+        padding:  0px;
+        h2 {
+            font-size: 3rem !important;
+        }
+    }
+    .btn{
+        font-size: 8px !important;
     }
 }
 

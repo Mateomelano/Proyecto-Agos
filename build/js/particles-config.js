@@ -1,4 +1,33 @@
-particlesJS("particles-js", {
+const imageSources = [
+  "../img/nube.png", // Primera opción (ruta local)
+  "./img/nube.png", // Segunda opción (ruta en línea)
+];
+
+// Función para encontrar la primera imagen válida
+function findValidImage(sources, callback) {
+  let index = 0;
+
+  function testNext() {
+    if (index >= sources.length) {
+      console.error("No se encontró ninguna imagen válida.");
+      return;
+    }
+
+    const img = new Image();
+    img.onload = () => callback(sources[index]); // Si carga, usa esta
+    img.onerror = () => {
+      index++;
+      testNext(); // Si falla, prueba la siguiente
+    };
+    img.src = sources[index];
+  }
+
+  testNext();
+}
+
+// Usar la función para cargar la imagen correcta y configurar particlesJS
+findValidImage(imageSources, (validSrc) => {
+  particlesJS("particles-js", {
     particles: {
       number: {
         value: 50, // Cantidad de nubes visibles
@@ -12,7 +41,7 @@ particlesJS("particles-js", {
       shape: {
         type: "image", // Usamos imágenes como partículas
         image: {
-          src: "../img/nube.png", // Ruta a la imagen de nube
+          src: validSrc, // Usar la imagen válida encontrada
           width: 300,
           height: 300,
         },
@@ -54,4 +83,4 @@ particlesJS("particles-js", {
     },
     retina_detect: true,
   });
-  
+});

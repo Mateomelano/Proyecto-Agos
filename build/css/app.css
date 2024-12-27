@@ -423,7 +423,16 @@ nav a:hover {
 }
 @media (max-width: 750px) {
   .containerr {
-    max-width: 520px !important;
+    max-width: 400px !important;
+  }
+  .nav-buttons {
+    padding: 0px;
+  }
+  .nav-buttons h2 {
+    font-size: 3rem !important;
+  }
+  .btn {
+    font-size: 8px !important;
   }
 }
 .nav-buttons {
@@ -1037,11 +1046,11 @@ p {
 }
 
 #portada {
-  background: url("../../../build/img/portada.jpg");
+  background: url("https://res.cloudinary.com/dbraqaqko/image/upload/v1735337287/portada_wmlpbh.jpg");
 }
 
 #portada-back {
-  background: url("../../../build/img/portada.jpg");
+  background: url("https://res.cloudinary.com/dbraqaqko/image/upload/v1735337287/portada_wmlpbh.jpg");
 }
 
 #portada, #portada-back {
@@ -1123,18 +1132,18 @@ p {
   }
   .book-content {
     width: 100%;
-    min-width: 250px;
-    max-width: 400px;
+    min-width: 200px;
+    max-width: 300px;
     height: 500px;
     position: relative;
     perspective: 1000px;
     transition: 1s;
   }
   p {
-    font-size: 7px;
+    font-size: 5px;
   }
   #txt {
-    font-size: 7px;
+    font-size: 5px;
   }
 }
 .page-indicator {
@@ -1194,11 +1203,11 @@ p {
 
 /* Botones estilizados */
 .buttons {
-  display: flex;
+  display: flex !important;
   gap: 20px;
 }
 
-.btn {
+.buttons a {
   text-decoration: none;
   background: linear-gradient(45deg, #ff9ff3, #feca57); /* Colores pastel */
   color: white;
@@ -1213,7 +1222,7 @@ p {
 }
 
 /* Hover en los botones */
-.btn:hover {
+.buttons a:hover {
   transform: translateY(-5px) scale(1.05); /* Flotar hacia arriba */
   box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3), inset 0 -5px 10px rgba(255, 255, 255, 0.5);
 }
